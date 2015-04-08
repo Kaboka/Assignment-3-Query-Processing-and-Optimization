@@ -86,6 +86,24 @@ public class RecoveryMgr {
       else
          return new SetStringRecord(txnum, blk, offset, oldval).writeToLog();
    }
+   
+   public int setFloat(Buffer buff, int offset, float newval) {
+      float oldval = buff.getFloat(offset);
+      Block blk = buff.block();
+      if (isTempBlock(blk))
+         return -1;
+      else
+         return new SetFloatRecord(txnum, blk, offset, oldval).writeToLog();
+   }
+   
+   public int setBool(Buffer buff, int offset, boolean newval) {
+      boolean oldval = buff.getBool(offset);
+      Block blk = buff.block();
+      if (isTempBlock(blk))
+         return -1;
+      else
+         return new SetBoolRecord(txnum, blk, offset, oldval).writeToLog();
+   }
 
    /**
     * Rolls back the transaction.

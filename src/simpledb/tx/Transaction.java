@@ -127,6 +127,32 @@ public class Transaction {
       return buff.getString(offset);
    }
    
+   public float getFloat(Block blk, int offset) {
+      concurMgr.sLock(blk);
+      Buffer buff = myBuffers.getBuffer(blk);
+      return buff.getFloat(offset);
+   }
+   
+   public boolean getBool(Block blk, int offset) {
+      concurMgr.sLock(blk);
+      Buffer buff = myBuffers.getBuffer(blk);
+      return buff.getBool(offset);
+   }
+   
+   public void setFloat(Block blk, int offset, float val) {
+      concurMgr.xLock(blk);
+      Buffer buff = myBuffers.getBuffer(blk);
+      int lsn = recoveryMgr.setFloat(buff, offset, val);
+      buff.setFloat(offset, val, txnum, lsn);
+   }
+   
+   public void setBool(Block blk, int offset, boolean val) {
+      concurMgr.xLock(blk);
+      Buffer buff = myBuffers.getBuffer(blk);
+      int lsn = recoveryMgr.setBool(buff, offset, val);
+      buff.setBool(offset, val, txnum, lsn);
+   }
+   
    /**
     * Stores an integer at the specified offset 
     * of the specified block.

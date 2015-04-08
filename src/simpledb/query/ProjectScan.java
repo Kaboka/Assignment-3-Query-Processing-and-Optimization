@@ -65,4 +65,20 @@ public class ProjectScan implements Scan {
    public boolean hasField(String fldname) {
       return fieldlist.contains(fldname);
    }
+
+    @Override
+    public boolean getBool(String fldname) {
+      if (hasField(fldname))
+         return s.getBool(fldname);
+      else
+         throw new RuntimeException("field " + fldname + " not found.");
+    }
+
+    @Override
+    public float getFloat(String fldname) {
+      if (hasField(fldname))
+         return s.getFloat(fldname);
+      else
+         throw new RuntimeException("field " + fldname + " not found.");
+    }
 }

@@ -93,6 +93,26 @@ public class RecordPage {
       tx.setString(blk, position, val);
    }
    
+   public void setFloat(String fldname, float val){
+      int position = fieldpos(fldname);
+      tx.setFloat(blk, position, val);   
+   }
+   
+   public void setBool(String fldname, boolean val){
+      int position = fieldpos(fldname);
+      tx.setBool(blk, position, val);   
+   }
+   
+   public float getFloat(String fldname) {
+      int position = fieldpos(fldname);
+      return tx.getFloat(blk, position);
+   }
+   
+   public boolean getBool(String fldname) {
+      int position = fieldpos(fldname);
+      return tx.getBool(blk, position);
+   }
+   
    /**
     * Deletes the current record.
     * Deletion is performed by just marking the record

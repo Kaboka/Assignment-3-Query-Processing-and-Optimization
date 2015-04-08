@@ -1,8 +1,10 @@
 package simpledb.query;
 
+import static java.sql.Types.FLOAT;
 import static java.sql.Types.INTEGER;
-import simpledb.tx.Transaction;
+import static java.sql.Types.VARCHAR;
 import simpledb.record.*;
+import simpledb.tx.Transaction;
 
 /**
  * The Scan class corresponding to a table.
@@ -51,8 +53,12 @@ public class TableScan implements UpdateScan {
    public Constant getVal(String fldname) {
       if (sch.type(fldname) == INTEGER)
          return new IntConstant(rf.getInt(fldname));
-      else
+      else if(sch.type(fldname) == VARCHAR)
          return new StringConstant(rf.getString(fldname));
+      else if(sch.type(fldname) == FLOAT)
+          return new FloatConstant(rf.getFloat(fldname));
+      else
+          return new BoolConstant((rf.getBool(fldname)));
    }
    
    public int getInt(String fldname) {
@@ -61,6 +67,14 @@ public class TableScan implements UpdateScan {
    
    public String getString(String fldname) {
       return rf.getString(fldname);
+   }
+   
+   public float getFloat(String fldname){
+       return rf.getFloat(fldname);
+   }
+   
+   public boolean getBool(String fldname){
+       return rf.getBool(fldname);
    }
    
    public boolean hasField(String fldname) {
@@ -106,4 +120,14 @@ public class TableScan implements UpdateScan {
    public void moveToRid(RID rid) {
       rf.moveToRid(rid);
    }
+
+    @Override
+    public void setBool(String fldname, boolean val) {
+       rf.setBool(fldname, val);
+    }
+
+    @Override
+    public void setFloat(String fldname, float val) {
+        rf.setFloat(fldname, val);
+    }
 }

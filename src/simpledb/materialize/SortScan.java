@@ -147,4 +147,14 @@ public class SortScan implements Scan {
       if (rid2 != null)
          s2.moveToRid(rid2);
    }
+
+    @Override
+    public boolean getBool(String fldname) {
+        return currentscan.getBool(fldname);
+    }
+
+    @Override
+    public float getFloat(String fldname) {
+        return currentscan.getFloat(fldname);
+    }
 }

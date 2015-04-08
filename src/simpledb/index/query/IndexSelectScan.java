@@ -95,4 +95,14 @@ public class IndexSelectScan implements Scan {
    public boolean hasField(String fldname) {
       return ts.hasField(fldname);
    }
+
+    @Override
+    public boolean getBool(String fldname) {
+        return ts.getBool(fldname);
+    }
+
+    @Override
+    public float getFloat(String fldname) {
+        return ts.getFloat(fldname);
+    }
 }

@@ -51,6 +51,8 @@ public class Page {
     */
    public static final int INT_SIZE = Integer.SIZE / Byte.SIZE;
    
+   public static final float FLOAT_SIZE = Float.SIZE/Byte.SIZE;
+   
    /**
     * The maximum size, in bytes, of a string of length n.
     * A string is represented as the encoding of its characters,
@@ -155,5 +157,26 @@ public class Page {
       byte[] byteval = val.getBytes();
       contents.putInt(byteval.length);
       contents.put(byteval);
+   }
+   
+      public synchronized float getFloat(int offset) {
+      contents.position(offset);
+      return contents.getFloat();
+   }
+   
+   public synchronized void setFloat(int offset, float val){
+      contents.position(offset);
+      contents.putFloat(val);
+   }
+   
+   public synchronized boolean getBool(int offset) {
+      contents.position(offset);
+      return contents.getInt() == 1;
+   }
+   
+   public synchronized void setBool(int offset, boolean val){
+      contents.position(offset);
+      int i = (val)? 1 : 0 ;
+      contents.putInt(i);
    }
 }

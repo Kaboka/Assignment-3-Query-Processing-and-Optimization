@@ -108,4 +108,14 @@ public class ChunkScan implements Scan {
       rp = pages.get(current - startbnum);
       rp.moveToId(-1);
    }
+
+    @Override
+    public boolean getBool(String fldname) {
+      return rp.getBool(fldname);
+    }
+
+    @Override
+    public float getFloat(String fldname) {
+        return rp.getFloat(fldname);
+    }
 }

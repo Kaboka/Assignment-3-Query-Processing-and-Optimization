@@ -81,6 +81,21 @@ public class RecordFile {
       return rp.getString(fldname);
    }
    
+   public boolean getBool (String fldname){
+       return rp.getBool(fldname);
+   }
+   
+   public void setBool(String fldname, boolean val){
+       rp.setBool(fldname, val);
+   }
+   
+   public void setFloat(String fldname, float val){
+       rp.setFloat(fldname, val);
+   }
+   
+   public float getFloat(String fldname){
+       return rp.getFloat(fldname);
+   }
    /**
     * Sets the value of the specified field 
     * in the current record.

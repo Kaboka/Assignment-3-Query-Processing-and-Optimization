@@ -128,5 +128,15 @@ public class GroupByScan implements Scan {
          return true;
       return false;
    }
+
+    @Override
+    public boolean getBool(String fldname) {
+        return (Boolean)getVal(fldname).asJavaVal();
+    }
+
+    @Override
+    public float getFloat(String fldname) {
+        return (Float)getVal(fldname).asJavaVal();
+    }
 }
 

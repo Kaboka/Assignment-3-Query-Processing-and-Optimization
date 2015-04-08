@@ -105,4 +105,20 @@ public class ProductScan implements Scan {
    public boolean hasField(String fldname) {
       return s1.hasField(fldname) || s2.hasField(fldname);
    }
+
+    @Override
+    public boolean getBool(String fldname) {
+      if (s1.hasField(fldname))
+         return s1.getBool(fldname);
+      else
+         return s2.getBool(fldname);
+    }
+
+    @Override
+    public float getFloat(String fldname) {
+      if (s1.hasField(fldname))
+         return s1.getFloat(fldname);
+      else
+         return s2.getFloat(fldname);
+    }
 }

@@ -60,6 +60,13 @@ public class Buffer {
       return contents.getString(offset);
    }
 
+   public float getFloat(int offset){
+       return contents.getFloat(offset);
+   }
+   
+   public boolean getBool(int offset){
+       return contents.getBool(offset);
+   }
    /**
     * Writes an integer to the specified offset of the
     * buffer's page.
@@ -102,6 +109,19 @@ public class Buffer {
       contents.setString(offset, val);
    }
 
+   public void setBool(int offset, boolean val, int txnum, int lsn) {
+      modifiedBy = txnum;
+      if (lsn >= 0)
+	      logSequenceNumber = lsn;
+      contents.setBool(offset, val);
+   }
+   
+   public void setFloat(int offset, float val, int txnum, int lsn) {
+      modifiedBy = txnum;
+      if (lsn >= 0)
+	      logSequenceNumber = lsn;
+      contents.setFloat(offset, val);
+   }
    /**
     * Returns a reference to the disk block
     * that the buffer is pinned to.

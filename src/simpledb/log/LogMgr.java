@@ -104,8 +104,12 @@ public class LogMgr implements Iterable<BasicLogRecord> {
    private void appendVal(Object val) {
       if (val instanceof String)
          mypage.setString(currentpos, (String)val);
-      else
+      else if (val instanceof Integer)
          mypage.setInt(currentpos, (Integer)val);
+      else if(val instanceof Float)
+          mypage.setFloat(currentpos, (Float)val);
+      else 
+          mypage.setBool(currentpos, (Boolean)val);
       currentpos += size(val);
    }
 
@@ -114,6 +118,8 @@ public class LogMgr implements Iterable<BasicLogRecord> {
     * @param val the value
     * @return the size of the value, in bytes
     */
+   
+   //TO DO - Kasper mangler Float og Bool?!
    private int size(Object val) {
       if (val instanceof String) {
          String sval = (String) val;

@@ -100,4 +100,26 @@ public class SelectScan implements UpdateScan {
       UpdateScan us = (UpdateScan) s;
       us.moveToRid(rid);
    }
+
+    @Override
+    public void setBool(String fldname, boolean val) {
+      UpdateScan us = (UpdateScan) s;
+      us.setBool(fldname, val);
+    }
+
+    @Override
+    public void setFloat(String fldname, float val) {
+      UpdateScan us = (UpdateScan) s;
+      us.setFloat(fldname, val);
+    }
+
+    @Override
+    public boolean getBool(String fldname) {
+        return s.getBool(fldname);
+    }
+
+    @Override
+    public float getFloat(String fldname) {
+        return s.getFloat(fldname);
+    }
 }
