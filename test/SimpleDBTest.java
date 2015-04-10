@@ -42,8 +42,8 @@ public class SimpleDBTest {
         Schema schema = new Schema();
         schema.addStringField("name", TableMgr.MAX_NAME);
         schema.addIntField("age");
-//        schema.addBoolField("male");
-//        schema.addFloatField("income");
+        schema.addBoolField("male");
+        schema.addFloatField("income");
         SimpleDB.mdMgr().createTable(tableName, schema, tx);
         TableInfo tableInfo = SimpleDB.mdMgr().getTableInfo(tableName, tx);
         RecordFile file = new RecordFile(tableInfo, tx);
@@ -51,20 +51,20 @@ public class SimpleDBTest {
         file.insert();
         file.setString("name", "Peter");
         file.setInt("age", 23);
-//        file.setBool("male", true);
-//        file.setFloat("income", 999999.99f);
+        file.setBool("male", true);
+        file.setFloat("income", 999999.99f);
 
         file.insert();
         file.setString("name", "John");
         file.setInt("age", 23);
-//        file.setBool("male", true);
-//        file.setFloat("income", 999.99f);
+        file.setBool("male", true);
+        file.setFloat("income", 999.99f);
 
         file.insert();
         file.setString("name", "Ellen");
         file.setInt("age", 25);
-//        file.setBool("male", false);
-//        file.setFloat("income", 424242.99f);
+        file.setBool("male", false);
+        file.setFloat("income", 424242.99f);
         tx.commit();
     }
 
@@ -84,19 +84,22 @@ public class SimpleDBTest {
        
 
         Transaction tx2 = new Transaction();
+        TableInfo info = SimpleDB.mdMgr().getTableInfo(tableName, tx2);
+        System.out.println(info.schema().fields());
 
-        String qry = "select name"
+/*        String qry = "select name, age, male, income"
                 + " from " + tableName;
         Plan p = SimpleDB.planner().createQueryPlan(qry, tx2);
+        SimpleDB.planner().
         Scan s = p.open();
 
         while (s.next()) {
             String name = s.getString("name");
-//            int age = s.getInt("age");
- /*           boolean male = s.getBool("male");
-            float income = s.getFloat("income");*/
-            System.out.println(/*name + "\t" +*/ name  /*+ male + "\t" + income*/);
+           int age = s.getInt("age");
+            boolean male = s.getBool("male");
+            float income = s.getFloat("income");
+            System.out.println(name + "\t" + age + "\t" + male + "\t" + income);
         }
-        s.close();
+        s.close();*/
     }
 }

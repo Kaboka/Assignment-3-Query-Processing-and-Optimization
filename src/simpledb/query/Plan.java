@@ -37,7 +37,7 @@ public interface Plan {
     * @param fldname the name of a field
     * @return the estimated number of distinct field values in the output
     */
-   public int    distinctValues(String fldname);
+   public int distinctValues(String fldname);
    
    /**
     * Returns the schema of the query.
