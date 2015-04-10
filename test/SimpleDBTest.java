@@ -87,10 +87,9 @@ public class SimpleDBTest {
         TableInfo info = SimpleDB.mdMgr().getTableInfo(tableName, tx2);
         System.out.println(info.schema().fields());
 
-/*        String qry = "select name, age, male, income"
+        String qry = "select name, age, male, income"
                 + " from " + tableName;
         Plan p = SimpleDB.planner().createQueryPlan(qry, tx2);
-        SimpleDB.planner().
         Scan s = p.open();
 
         while (s.next()) {
@@ -100,6 +99,6 @@ public class SimpleDBTest {
             float income = s.getFloat("income");
             System.out.println(name + "\t" + age + "\t" + male + "\t" + income);
         }
-        s.close();*/
+        s.close();
     }
 }
