@@ -5,15 +5,19 @@
  */
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import simpledb.materialize.SortPlan;
 import simpledb.metadata.TableMgr;
 import simpledb.query.Plan;
 import simpledb.query.Scan;
+import simpledb.query.TablePlan;
 import simpledb.record.RecordFile;
 import simpledb.record.Schema;
 import simpledb.record.TableInfo;
@@ -35,7 +39,8 @@ public class SimpleDBTest {
     static final String dbName = "mytestdb";
 
     @BeforeClass
-    public static void setupClass() {
+    public static void setupClass() throws IOException {
+        SimpleDB.dropDatabase(dbName);
         SimpleDB.init(dbName);
         tx = new Transaction();
 
@@ -55,14 +60,20 @@ public class SimpleDBTest {
         file.setFloat("income", 999999.99f);
 
         file.insert();
-        file.setString("name", "John");
-        file.setInt("age", 23);
+        file.setString("name", "Ellen");
+        file.setInt("age", 25);
         file.setBool("male", true);
         file.setFloat("income", 999.99f);
 
         file.insert();
-        file.setString("name", "Ellen");
-        file.setInt("age", 25);
+        file.setString("name", "John");
+        file.setInt("age", 23);
+        file.setBool("male", false);
+        file.setFloat("income", 424242.99f);
+        
+                file.insert();
+        file.setString("name", "John");
+        file.setInt("age", 23);
         file.setBool("male", false);
         file.setFloat("income", 424242.99f);
         tx.commit();
@@ -78,10 +89,9 @@ public class SimpleDBTest {
         tx.commit();
     }
 
-    @Test
+//    @Test
     public void myTest() {
         SimpleDB.init(dbName);
-       
 
         Transaction tx2 = new Transaction();
         TableInfo info = SimpleDB.mdMgr().getTableInfo(tableName, tx2);
@@ -94,7 +104,29 @@ public class SimpleDBTest {
 
         while (s.next()) {
             String name = s.getString("name");
-           int age = s.getInt("age");
+            int age = s.getInt("age");
+            boolean male = s.getBool("male");
+            float income = s.getFloat("income");
+            System.out.println(name + "\t" + age + "\t" + male + "\t" + income);
+        }
+        s.close();
+    }
+
+    @Test
+    public void sortTest() {
+        SimpleDB.init(dbName);
+
+        Transaction tx2 = new Transaction();
+        TableInfo info = SimpleDB.mdMgr().getTableInfo(tableName, tx2);
+        System.out.println(info.schema().fields());
+        List<String> sortFields = new ArrayList<>();
+        sortFields.add("age");
+        Plan p = new SortPlan(new TablePlan(tableName, tx), sortFields, tx);
+        Scan s = p.open();
+
+        while (s.next()) {
+            String name = s.getString("name");
+            int age = s.getInt("age");
             boolean male = s.getBool("male");
             float income = s.getFloat("income");
             System.out.println(name + "\t" + age + "\t" + male + "\t" + income);

@@ -1,5 +1,6 @@
 package simpledb.query;
 
+import static java.sql.Types.BOOLEAN;
 import static java.sql.Types.FLOAT;
 import static java.sql.Types.INTEGER;
 import static java.sql.Types.VARCHAR;
@@ -91,8 +92,12 @@ public class TableScan implements UpdateScan {
     * @see simpledb.query.UpdateScan#setVal(java.lang.String, simpledb.query.Constant)
     */ 
    public void setVal(String fldname, Constant val) {
-      if (sch.type(fldname) == INTEGER)
+      if(sch.type(fldname) == INTEGER)
          rf.setInt(fldname, (Integer)val.asJavaVal());
+      else if(sch.type(fldname) == FLOAT)
+         rf.setFloat(fldname, (Float)val.asJavaVal());
+      else if(sch.type(fldname) == BOOLEAN)
+          rf.setBool(fldname, (Boolean)val.asJavaVal());
       else
          rf.setString(fldname, (String)val.asJavaVal());
    }
